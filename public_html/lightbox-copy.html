@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      var popupName = 'donateCSBS';
+      var daysToExpiry = 9999;
+      var startDate = '2014/12/01';
+      var endDate = '2100/01/01';
+    </script>
+    <style type="text/css">
+      #lightbox-elements {
+        display: none;
+      }
+      #back-overlay {
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        background:#000;
+        opacity: .7;
+        filter:alpha(opacity=70);
+        -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+        z-index:50;
+      }
+      #close {
+        float:right;
+        margin-right:6px;
+        cursor:pointer;
+        color: #000000;
+        position: relative;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: normal;
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+      #close span.x {
+        display: block;
+        float: right;
+        font-size: 11px;
+        background: #ffffff;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        padding: 1px;
+        font-weight: bold;
+        font-size: 8px;
+        margin-left: 3px;
+      }
+      #content-box {
+        position:absolute;
+        top:15%;
+        left:30%;
+        width:450px;
+        height:170px;
+        color:#fff;
+        z-index:51;
+        -moz-box-shadow:0px 0px 5px #444444;
+        -webkit-box-shadow:0px 0px 5px #444444;
+        box-shadow:0px 0px 5px #444444;
+        background: #d7d7d7;
+
+      }
+
+      #content-box img {
+        max-width: 80%;
+        max-height: 80%;
+      }
+
+      #givenow-div {
+        padding: 2% 0 2% 0:;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="lightbox-elements">
+      <div id="back-overlay"></div>
+      <div id="content-box">
+        <div id="close">Close <span class="x">x</span></div>
+        <img src="lightbox-donate-image.png">
+        <form action="" method="get">
+          <label for="amountOther">Enter Amount $</label>
+          <input type="number" name="amountOther" required>
+          <div id="givenow-div"> <input type="submit" value="Give Now"></div>
+
+        </form>
+      </div>
+    </div>
+
+    <a href="javascript:eraseCookie(popupName);">Delete the cookie</div>
+
+    <script>
+      jQuery(document).ready(function(){
+        if(isTimely() && !readCookie(popupName)){     //if the 'popup' cookie does not exist, create one, and show the content
+          //createCookie(popupName, true, daysToExpiry);
+          jQuery('#lightbox-elements').css('display', 'block');
+        }
+      });
+      jQuery('#back-overlay, #close').click(function() {  //Click the back-overlay (anywhere outside the form) div to hide the page content
+        jQuery('#lightbox-elements').css('display', 'none');
+      });
+      jQuery(document).on('keydown', function(e) {
+          if(e.keyCode == 27) jQuery('#lightbox-elements').css('display', 'none');
+      });
+      jQuery('#lightbox-elements form').submit(function() {
+        createCookie(popupName, true, daysToExpiry);
+      });
+
+      function isTimely() {
+        today = new Date();
+        start = new Date(startDate);
+        end = new Date(endDate);
+        return today >= start && today <= end;
+      }
+
+      function createCookie(name, value, days) {
+        var expires;
+
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        } else {
+          expires = "";
+        }
+        document.cookie = name + '=' + value +';path=/'+ ';expires=' + date.toUTCString();
+      }
+
+      function readCookie(name) {
+        var nameEQ = escape(name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return unescape(c.substring(nameEQ.length, c.length));
+        }
+        return false;
+      }
+
+      function eraseCookie(name) {
+        createCookie(name, "", -1);
+      }
+    </script>
+  </body>
+</html>
+
