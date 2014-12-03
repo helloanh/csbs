@@ -1,7 +1,5 @@
-##CSBS
-====
+##CSBS=
 #### Pop Up Specs:
-
 - when page loads, load popup and black (.7 opacity) overlay over the rest of the page
 - if the user does any of the following, close the popup
 	a) clicks the close button in the corner
